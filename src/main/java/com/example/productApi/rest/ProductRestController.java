@@ -5,6 +5,7 @@
 package com.example.productApi.rest;
 
 import com.example.productApi.entity.Product;
+import com.example.productApi.handler.ProductNotFoundException;
 import com.example.productApi.service.ProductService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,9 @@ public class ProductRestController {
     
     @GetMapping("/products/{id}")
     public Product getProduct(@PathVariable Integer id){
+        if(id<0 || id>=this.service.findAll().size()){
+            throw new ProductNotFoundException("Product With Id: " +  id + " Not Found");
+        }
         return this.service.findProductById(id);
     }
     
@@ -56,6 +60,9 @@ public class ProductRestController {
     
     @DeleteMapping("/products/{id}")
     public void deleteProduct(@PathVariable Integer id){
+        if(id<0 || id>=this.service.findAll().size()){
+            throw new ProductNotFoundException("Product With Id: " +  id + " Not Found");
+        }
         this.service.delete(id);
     }
 }
