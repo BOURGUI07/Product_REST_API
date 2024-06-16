@@ -2,48 +2,53 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.example.productApi.dao;
+package com.example.productApi.service;
 
+import com.example.productApi.dao.ProductDAO;
 import com.example.productApi.entity.Product;
-import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author hp
  */
-@Repository
-public class ProductDAOImpl implements ProductDAO {
+@Service
+public class ProductServiceImpl implements ProductService {
     
     @Autowired
-    public ProductDAOImpl(EntityManager em) {
-        this.em=em;
+    public ProductServiceImpl(ProductDAO dao) {
+        this.dao = dao;
     }
-    private EntityManager em;
+    private ProductDAO dao;
+    
     @Override
+    @Transactional
     public void create(Product p){
-        this.em.persist(p);
+        this.dao.create(p);
     }
     
     @Override
     public List<Product> findAll(){
-        return this.em.createQuery("FROM Product", Product.class).getResultList();
+        return this.dao.findAll();
     }
     
     @Override
     public Product findProductById(Integer id){
-        return this.em.find(Product.class, id);
+        return this.dao.findProductById(id);
     }
     
     @Override
+    @Transactional
     public Product update(Product p){
-        return this.em.merge(p);
+        return this.dao.update(p);
     }
     
     @Override
+    @Transactional
     public void delete(Integer id){
-        this.em.remove(this.findProductById(id));
+        this.dao.delete(id);
     }
 }
