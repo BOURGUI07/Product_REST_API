@@ -12,9 +12,9 @@ import java.util.List;
  * @author hp
  */
 public interface ProductService {
-    void create(Product p);
+    Product save(Product p);
     List<Product> findAll();
-    Product findProductById(Integer id);
-    Product update(Product p);
-    void delete(Integer id);
+    Product findById(Integer id);
+
+    void deleteById(Integer id);
 }

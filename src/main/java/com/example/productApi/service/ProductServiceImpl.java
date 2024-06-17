@@ -4,9 +4,8 @@
  */
 package com.example.productApi.service;
 
-import com.example.productApi.dao.ProductDAO;
 import com.example.productApi.entity.Product;
-import jakarta.transaction.Transactional;
+import com.example.productApi.repo.ProductRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,36 +18,29 @@ import org.springframework.stereotype.Service;
 public class ProductServiceImpl implements ProductService {
     
     @Autowired
-    public ProductServiceImpl(ProductDAO dao) {
-        this.dao = dao;
+    public ProductServiceImpl(ProductRepository repo) {
+        this.repo = repo;
     }
-    private ProductDAO dao;
+    private ProductRepository repo;
     
     @Override
-    @Transactional
-    public void create(Product p){
-        this.dao.create(p);
+    public Product save(Product p){
+        return this.repo.save(p);
     }
     
     @Override
     public List<Product> findAll(){
-        return this.dao.findAll();
+        return this.repo.findAll();
     }
     
     @Override
-    public Product findProductById(Integer id){
-        return this.dao.findProductById(id);
+    public Product findById(Integer id){
+        return this.repo.findById(id).get();
     }
     
-    @Override
-    @Transactional
-    public Product update(Product p){
-        return this.dao.update(p);
-    }
     
     @Override
-    @Transactional
-    public void delete(Integer id){
-        this.dao.delete(id);
+    public void deleteById(Integer id){
+        this.repo.deleteById(id);
     }
 }

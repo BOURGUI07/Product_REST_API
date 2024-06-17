@@ -44,18 +44,18 @@ public class ProductRestController {
         if(id<0 || id>=this.service.findAll().size()){
             throw new ProductNotFoundException("Product With Id: " +  id + " Not Found");
         }
-        return this.service.findProductById(id);
+        return this.service.findById(id);
     }
     
     @PostMapping("/products")
-    public void addproduct(@RequestBody Product p){
-        this.service.create(p);
+    public Product addproduct(@RequestBody Product p){
+        p.setId(0);
+        return this.service.save(p);
     }
     
     @PutMapping("products")
     public Product updateProduct(@RequestBody Product p){
-        var x = this.service.update(p);
-        return x;
+        return this.service.save(p);
     }
     
     @DeleteMapping("/products/{id}")
@@ -63,6 +63,6 @@ public class ProductRestController {
         if(id<0 || id>=this.service.findAll().size()){
             throw new ProductNotFoundException("Product With Id: " +  id + " Not Found");
         }
-        this.service.delete(id);
+        this.service.deleteById(id);
     }
 }
