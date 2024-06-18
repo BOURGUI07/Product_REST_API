@@ -4,14 +4,14 @@
  */
 package com.example.productApi.security;
 
+import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 /**
@@ -22,26 +22,8 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
     
     @Bean
-    public InMemoryUserDetailsManager userDetailsManager(){
-        UserDetails youness = User.builder()
-                .username("youness")
-                .password("{noop}youness")
-                .roles("EMPLOYEE")
-                .build();
-        
-        UserDetails yassine = User.builder()
-                .username("yassine")
-                .password("{noop}yassine")
-                .roles("EMPLOYEE","MANAGER")
-                .build();
-        
-        UserDetails omar = User.builder()
-                .username("omar")
-                .password("{noop}omar")
-                .roles("EMPLOYEE", "MANAGER", "ADMIN")
-                .build();
-        
-        return new InMemoryUserDetailsManager(youness, yassine, omar);
+    public UserDetailsManager userDetailsManager(DataSource datasource){
+        return new JdbcUserDetailsManager(datasource);
     }
     
     @Bean
