@@ -7,7 +7,6 @@ package com.example.productApi.repo;
 import com.example.productApi.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.stereotype.Repository;
 
 /**
  *
