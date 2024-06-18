@@ -9,6 +9,7 @@ This project is a REST API for managing products in an inventory system. It supp
 - **Spring Data JPA**: For database interactions.
 - **Spring Security**: To handle authentication and authorization.
 - **Spring Data REST**: For easy integration with RESTful services.
+- **MySQL**: For the relational database management system.
 - **Maven**: For managing project dependencies.
 - **Postman**: For testing the API endpoints.
 
